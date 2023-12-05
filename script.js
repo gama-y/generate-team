@@ -268,4 +268,4 @@ sortableList.addEventListener("touchmove", initPlayerList);
 addbutton.addEventListener('click', addPlayer);
 resetbutton.addEventListener('click', resetPlayerList);
 removebutton.addEventListener('click', removePlayer);
-removebutton.addEventListener('touchend', removePlayer);
+removebutton.addEventListener('touchstart', removePlayer);
