@@ -108,7 +108,7 @@ const createPlayer = (name) =>{
 const addPlayer = ()=>{
     console.log(getPlayerList().length);
     let roomspace = 10 - getPlayerList().length;
-    inputField.value.split(/,|，/).forEach((player,index)=>{
+    inputField.value.split(/,|，|，/).forEach((player,index)=>{
         if(index < roomspace) {
             insertPlayerToList(createPlayer(player));
             message.innerHTML = '';
@@ -230,7 +230,7 @@ const loadPlayerList = () =>{
         if(players == 'undefined'){
             return;
         }
-        let playersArr = players.split(/,|，/);
+        let playersArr = players.split(/,|，|，/);
 
         playersArr.forEach(player=>{
             insertPlayerToList(createPlayer(player));
