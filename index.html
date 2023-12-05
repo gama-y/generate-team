@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>GEN條LIST出黎</title>
+    <link href="style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="player-list">
+        <ul class="sortable-list">
+          <li class="item" draggable="true">
+            <div class="details">
+              <i class="uil uil-cancel remove-self"></i>
+              <span>Player's name</span>
+            </div>
+            <i class="uil uil-draggabledots"></i>
+          </li>
+        </ul>
+
+        <div class="new-player-container">
+          <div class="input">
+          <input type="text" name="player" id="player" placeholder="name"/>
+          <button id="add-name" type="button">Add name</button>
+          <button id="reset" type="button">Reset</button>
+          </div>
+          <p>Max 10 names</p>
+        </div>
+      </div>
+      <div class="team-list">
+        <ol class="team-item">
+          <li>
+            <span class="name">Player's name</span>
+            <ol>
+              <li class="done">Members, Members, Members  </li>
+              <li>Members, Members, Members  </li>
+              <li>Members, Members, Members  </li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+</html>
