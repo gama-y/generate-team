@@ -106,7 +106,6 @@ const createPlayer = (name) =>{
 }
 
 const addPlayer = ()=>{
-    console.log(getPlayerList().length);
     let roomspace = 10 - getPlayerList().length;
     inputField.value.split(/,|，|，/).forEach((player,index)=>{
         if(index < roomspace) {
@@ -140,7 +139,6 @@ const insertPlayerToList = (e) =>{
 // Generate Grouped List
 // --------------------------
 const pairingPlayer = (playerList) => {
-    console.log(`generateGameBoard with this list: ${playerList.toString()}`);
 
     let partyMember = [];
     playerList.forEach((player,index)=>{
@@ -150,8 +148,6 @@ const pairingPlayer = (playerList) => {
         let teammate = playerList.filter((item)=> item !== player );
         let nums = teammate.length>6 ? 3:2; // numbers of group [1,1,1,2,2,3,3,3]
         let count =  teammate.length/nums;
-        console.log(`Leader: ${player}, teammate x ${teammate.length}: ${teammate.toString()}, teams person per group = ${count}`);
-
         if(teammate.length > 3){
             do{
                 for(i=0; i < nums; i++){
