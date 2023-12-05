@@ -12,11 +12,14 @@ const message = document.querySelector(".message");
 // -----------------------
 items.forEach(item => {
     item.addEventListener("dragstart", () => {
+        // Adding dragging class to item after a delay
         setTimeout(() => item.classList.add("dragging"), 0);
     });
+    // Removing dragging class from item on dragend event
     item.addEventListener("dragend", () => item.classList.remove("dragging"));
 
     item.addEventListener("touchstart", () => {
+        // Adding dragging class to item after a delay
         setTimeout(() => item.classList.add("dragging"), 0);
     });
     item.addEventListener("touchend", () => item.classList.remove("dragging"));
@@ -32,7 +35,6 @@ const initPlayerList = (e) => {
     let nextSibling = siblings.find(sibling => {
         if(e.targetTouches !== undefined){
             var touchLocation = e.targetTouches[0];
-            console.log(touchLocation);
             return  touchLocation.pageY  <= sibling.offsetTop + sibling.offsetHeight / 2;
         }
         return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
@@ -74,9 +76,10 @@ const createPlayer = (name) =>{
         div.setAttribute("class", "details");
 
         // Create an icon element
-        var removeBtn = document.createElement("i");
+        var removeBtn = document.createElement("button");
 
         // Set the class attribute
+        removeBtn.setAttribute("type", "button");
         removeBtn.setAttribute("class", "uil uil-cancel remove-self");
         removeBtn.addEventListener('click', removePlayer);
         // Append the span to the div
@@ -102,8 +105,10 @@ const createPlayer = (name) =>{
         li.appendChild(i);
 
         li.addEventListener("dragstart", () => {
+            // Adding dragging class to item after a delay
             setTimeout(() => li.classList.add("dragging"), 0);
         });
+        // Removing dragging class from item on dragend event
         li.addEventListener("dragend", () => li.classList.remove("dragging"));
 
         
@@ -258,7 +263,7 @@ document.addEventListener('DOMContentLoaded',loadPlayerList);
 sortableList.addEventListener("dragover", initPlayerList);
 sortableList.addEventListener("dragenter", e => e.preventDefault());
 
-//
+
 sortableList.addEventListener("touchmove", initPlayerList);
 sortableList.addEventListener("touchleave", e => e.preventDefault());
 
