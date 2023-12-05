@@ -82,6 +82,7 @@ const createPlayer = (name) =>{
         removeBtn.setAttribute("type", "button");
         removeBtn.setAttribute("class", "uil uil-cancel remove-self");
         removeBtn.addEventListener('click', removePlayer);
+        removeBtn.addEventListener('touchstart', removePlayer);
         // Append the span to the div
         div.appendChild(removeBtn);
 
