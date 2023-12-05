@@ -263,10 +263,7 @@ document.addEventListener('DOMContentLoaded',loadPlayerList);
 sortableList.addEventListener("dragover", initPlayerList);
 sortableList.addEventListener("dragenter", e => e.preventDefault());
 
-
 sortableList.addEventListener("touchmove", initPlayerList);
-sortableList.addEventListener("touchleave", e => e.preventDefault());
-
 
 addbutton.addEventListener('click', addPlayer);
 resetbutton.addEventListener('click', resetPlayerList);
