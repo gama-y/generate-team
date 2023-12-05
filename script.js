@@ -5,6 +5,7 @@ const addbutton = document.querySelector('#add-name');
 const resetbutton = document.querySelector('#reset');
 const removebutton = document.querySelector('.remove-self');
 const teamList = document.querySelector(".team-item");
+const message = document.querySelector(".message");
 
 //
 // Player list
@@ -107,11 +108,12 @@ const createPlayer = (name) =>{
 const addPlayer = ()=>{
     console.log(getPlayerList().length);
     let roomspace = 10 - getPlayerList().length;
-    inputField.value.split(',').forEach((player,index)=>{
+    inputField.value.split(/,|，/).forEach((player,index)=>{
         if(index < roomspace) {
             insertPlayerToList(createPlayer(player));
+            message.innerHTML = '';
         } else {
-            console.log(`the room is full, player ${player} cannot be add to the list`);
+            message.innerHTML = `the room is full, player ${player} cannot be added to the list`;
         }
     });
     inputField.value = ''; //reset after insert;
@@ -125,6 +127,9 @@ const removePlayer =(e)=>{
 }
 
 const insertPlayerToList = (e) =>{
+    if(sortableList.querySelectorAll('.item.demo').length > 0){
+        sortableList.innerHTML=''; //remove the init element from list
+    }
     if(e) {
         sortableList.append(e);
     };
@@ -147,21 +152,25 @@ const pairingPlayer = (playerList) => {
         let count =  teammate.length/nums;
         console.log(`Leader: ${player}, teammate x ${teammate.length}: ${teammate.toString()}, teams person per group = ${count}`);
 
-        do{
-            for(i=0; i < nums; i++){
-                if(partyMember[index][i] == undefined){
-                    partyMember[index][i] = [];
-                }
-                if(teammate.length != 0){
-                    if(partyMember[index][i].length == 2){
-                        partyMember[index][i].push(teammate.pop());
-                    } else {
-                        partyMember[index][i].push(teammate.pop());
-                        partyMember[index][i].push(teammate.shift());
+        if(teammate.length > 3){
+            do{
+                for(i=0; i < nums; i++){
+                    if(partyMember[index][i] == undefined){
+                        partyMember[index][i] = [];
+                    }
+                    if(teammate.length != 0){
+                        if(partyMember[index][i].length == 2){
+                            partyMember[index][i].push(teammate.pop());
+                        } else {
+                            partyMember[index][i].push(teammate.pop());
+                            partyMember[index][i].push(teammate.shift());
+                        }
                     }
                 }
-            }
-        } while ( teammate.length > 0);
+            } while ( teammate.length > 0);
+        } else {
+            partyMember[index][0] = teammate;
+        }
     });
 
     return partyMember;
@@ -221,8 +230,7 @@ const loadPlayerList = () =>{
         if(players == 'undefined'){
             return;
         }
-        let playersArr = players.split(',');
-        sortableList.innerHTML=''; //remove the init element from list
+        let playersArr = players.split(/,|，/);
 
         playersArr.forEach(player=>{
             insertPlayerToList(createPlayer(player));
