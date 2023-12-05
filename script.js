@@ -12,11 +12,14 @@ const message = document.querySelector(".message");
 // -----------------------
 items.forEach(item => {
     item.addEventListener("dragstart", () => {
-        // Adding dragging class to item after a delay
         setTimeout(() => item.classList.add("dragging"), 0);
     });
-    // Removing dragging class from item on dragend event
     item.addEventListener("dragend", () => item.classList.remove("dragging"));
+
+    item.addEventListener("touchstart", () => {
+        setTimeout(() => item.classList.add("dragging"), 0);
+    });
+    item.addEventListener("touchend", () => item.classList.remove("dragging"));
 });
 
 const initPlayerList = (e) => {
@@ -27,6 +30,11 @@ const initPlayerList = (e) => {
 
     // Finding the sibling after which the dragging item should be placed
     let nextSibling = siblings.find(sibling => {
+        if(e.targetTouches !== undefined){
+            var touchLocation = e.targetTouches[0];
+            console.log(touchLocation);
+            return  touchLocation.pageY  <= sibling.offsetTop + sibling.offsetHeight / 2;
+        }
         return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
     });
 
@@ -94,11 +102,16 @@ const createPlayer = (name) =>{
         li.appendChild(i);
 
         li.addEventListener("dragstart", () => {
+            setTimeout(() => li.classList.add("dragging"), 0);
+        });
+        li.addEventListener("dragend", () => li.classList.remove("dragging"));
+
+        
+        li.addEventListener("touchstart", () => {
             // Adding dragging class to item after a delay
             setTimeout(() => li.classList.add("dragging"), 0);
         });
-        // Removing dragging class from item on dragend event
-        li.addEventListener("dragend", () => li.classList.remove("dragging"));
+        li.addEventListener("touchend", () => li.classList.remove("dragging"));
 
         return li;
     }
@@ -139,15 +152,15 @@ const insertPlayerToList = (e) =>{
 // Generate Grouped List
 // --------------------------
 const pairingPlayer = (playerList) => {
-
     let partyMember = [];
     playerList.forEach((player,index)=>{
         if(partyMember[index] == undefined){
             partyMember[index] = [];
         }
         let teammate = playerList.filter((item)=> item !== player );
-        let nums = teammate.length>6 ? 3:2; // numbers of group [1,1,1,2,2,3,3,3]
+        let nums = teammate.length>6 ? 3:2;
         let count =  teammate.length/nums;
+        
         if(teammate.length > 3){
             do{
                 for(i=0; i < nums; i++){
@@ -202,14 +215,8 @@ const generateGameBoard = (playerList) => {
     let list = pairingPlayer(playerList);
     teamList.innerHTML='';
     list.forEach((item,i) => {
-        console.log(item);
         teamList.append(createParty(getPlayerList()[i],item));
-        //item.forEach((child,j) => {
-           // console.log(`player ${[i]} - ${getPlayerList()[i]}'s get team ${j} members: ${child.toString()}`);
-        //})
-       // item.forEach(value => sum+=parseInt(value) )
     })
-    console.log(list);
 };
 
 
@@ -250,6 +257,11 @@ document.addEventListener('DOMContentLoaded',loadPlayerList);
 
 sortableList.addEventListener("dragover", initPlayerList);
 sortableList.addEventListener("dragenter", e => e.preventDefault());
+
+//
+sortableList.addEventListener("touchmove", initPlayerList);
+sortableList.addEventListener("touchleave", e => e.preventDefault());
+
 
 addbutton.addEventListener('click', addPlayer);
 resetbutton.addEventListener('click', resetPlayerList);
